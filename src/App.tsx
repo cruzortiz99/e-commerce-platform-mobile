@@ -32,12 +32,7 @@ const App = () => {
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
-      <AppMenu
-        open={true}
-        left={screen.width * 1}
-        width={screen.width * 0.9}
-        direction="horizontal"
-      />
+      <AppMenu open={true} width={screen.width * 0.9} direction="left-right" />
     </SafeAreaView>
   )
 }

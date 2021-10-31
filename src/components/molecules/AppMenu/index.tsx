@@ -3,10 +3,9 @@ import {ScrollView, StyleSheet, Text, View} from "react-native"
 
 export type AppMenuProps = {
   open?: boolean
-  left: number
-  direction: "horizontal" | "vertical"
+  direction: "left-right" | "right-left" | "vertical"
 } & (
-  | {direction: "horizontal"; width: number}
+  | {direction: "left-right" | "right-left"; width: number}
   | {direction: "vertical"; height: number}
 )
 
@@ -30,17 +29,7 @@ function AppMenu(props: AppMenuProps): JSX.Element {
       }}>
       <ScrollView
         style={{
-          ...styles.menu,
-          ...(props.direction === "vertical"
-            ? {width: "100%", height: props.height}
-            : {width: props.width, height: "100%"}),
-          transform: [
-            props.direction === "vertical"
-              ? {
-                  translateY: props.open ? 0 : props.height
-                }
-              : {translateX: props.open ? 0 : props.left}
-          ]
+          ...styles.menu
         }}>
         <Text>Menu de la app</Text>
       </ScrollView>
