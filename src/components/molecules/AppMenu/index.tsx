@@ -6,7 +6,7 @@ import {
   useWindowDimensions,
   View
 } from "react-native"
-import {delay, map, tap} from "rxjs"
+import {delay, map, takeLast, tap} from "rxjs"
 import {moveAnimation} from "../../../utils/animation"
 
 export type AppMenuProps = {
@@ -59,7 +59,7 @@ function AppSideMenu(props: AppMenuProps): JSX.Element {
             ),
             tap(setPosition)
           )
-          .pipe(delay(300))
+          .pipe(takeLast(1), delay(100))
           .subscribe(() => props.onClose && props.onClose())
       }>
       <View
