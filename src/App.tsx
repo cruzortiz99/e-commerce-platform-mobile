@@ -8,22 +8,42 @@
  * @format
  */
 
-import React from "react"
+import React, {useState} from "react"
 import {
+  Button,
   SafeAreaView,
+  ScrollView,
   StatusBar,
+  StyleSheet,
   useColorScheme,
-  useWindowDimensions
+  View
 } from "react-native"
 import {Colors} from "react-native/Libraries/NewAppScreen"
-import AppMenu from "./components/molecules/AppMenu"
+import AppSideMenu from "./components/molecules/AppMenu"
+
+const styles = StyleSheet.create({
+  main: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    zIndex: 1,
+    width: "100%"
+  }
+})
 
 const App = () => {
   const isDarkMode = useColorScheme() === "dark"
-  // const [open] = useObservable<boolean, Observable<boolean>>(
-  //   interval(5000).pipe(map((event) => event % 2 === 0))
-  // )
-  const screen = useWindowDimensions()
+  const [openLeft, _setOpenLeft] = useState(true)
+  const [openRight, _setOpenRight] = useState(false)
+
+  const setOpenLeft = (value: boolean) => {
+    value && _setOpenRight(false)
+    _setOpenLeft(value)
+  }
+  const setOpenRight = (value: boolean) => {
+    value && _setOpenLeft(false)
+    _setOpenRight(value)
+  }
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter
@@ -32,7 +52,30 @@ const App = () => {
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
-      <AppMenu open={true} width={screen.width * 0.9} direction="left-right" />
+      <AppSideMenu
+        title="Menu"
+        direction="left-right"
+        open={openLeft}
+        onClose={() => setOpenLeft(false)}
+      />
+      <AppSideMenu
+        direction="right-left"
+        title="Tools"
+        open={openRight}
+        onClose={() => setOpenRight(false)}
+      />
+      <ScrollView style={styles.main}>
+        <View>
+          <Button title="Left" onPress={() => setOpenLeft(true)} />
+        </View>
+        <View>
+          <Button
+            title="Right"
+            onPress={() => setOpenRight(true)}
+            color="#0a0"
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }

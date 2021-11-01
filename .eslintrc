@@ -8,6 +8,7 @@
     "no-console": "warn",
     "react/display-name": "off",
     "react/self-closing-comp": ["warn", {"component": true, "html": false}],
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "react-hooks/exhaustive-deps": "off"
   }
 }
